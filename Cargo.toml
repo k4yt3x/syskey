@@ -2,17 +2,17 @@
 authors = ["i@k4yt3x.com"]
 description = "Motorola system key generation utility"
 edition = "2021"
-homepage = "https://github.com/k4yt3x/syskeygen"
+homepage = "https://github.com/k4yt3x/syskey"
 keywords = ["web"]
 license = "ISC"
-name = "syskeygen"
+name = "syskey"
 readme = "README.md"
-repository = "https://github.com/k4yt3x/syskeygen"
+repository = "https://github.com/k4yt3x/syskey"
 resolver = "2"
 version = "1.0.0"
 
 [[bin]]
-name = "syskeygen"
+name = "syskey"
 path = "src/main.rs"
 
 [profile.dev]

@@ -1,4 +1,4 @@
-use std::{fs::File, io::Write, path::PathBuf};
+use std::{fs::File, io, io::Write, path::PathBuf};
 
 use anyhow::Result;
 use phf::phf_map;
@@ -159,6 +159,22 @@ static VW: phf::Map<&'static str, &'static str> = phf_map! {
     "FF" => "1B",
 };
 
+/// configs passed to the run function
+#[derive(Clone)]
+pub struct Config {
+    sysid: String,
+    interactive: bool,
+}
+
+impl Config {
+    pub fn new(sysid: String, interactive: bool) -> Config {
+        Config {
+            sysid,
+            interactive,
+        }
+    }
+}
+
 fn create_syskey(sysid: &str) -> Result<Vec<u8>> {
     let chars: Vec<&str> = sysid.split("").filter(|&x| !x.is_empty()).collect();
     let vwkey = format!("{}{}", chars[0], chars[1]);
@@ -179,9 +195,23 @@ fn create_syskey(sysid: &str) -> Result<Vec<u8>> {
     ])
 }
 
-pub fn run(sysid: String) -> Result<()> {
-    let syskey_bytes = create_syskey(&sysid)?;
-    let mut output = File::create(PathBuf::from(format!("{}.key", &sysid)))?;
+pub fn run(config: Config) -> Result<()> {
+    // create system key bytes
+    let syskey_bytes = create_syskey(&config.sysid)?;
+
+    // write system key to file
+    let output_path = PathBuf::from(format!("SYS{:0>5}.KEY", &config.sysid));
+    eprintln!("debug: writing key file to {:?}", output_path);
+    let mut output = File::create(output_path)?;
     output.write_all(&syskey_bytes)?;
+
+    // pause execution if it is launched interactively
+    // so the window does not close if the program was started by double click on Windows
+    if config.interactive == true {
+        print!("Press enter to exit...");
+        io::stdout().flush()?;
+        io::stdin().read_line(&mut String::new())?;
+    }
+
     Ok(())
 }
