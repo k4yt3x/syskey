@@ -1,0 +1,28 @@
+[package]
+authors = ["i@k4yt3x.com"]
+description = "Motorola system key generation utility"
+edition = "2021"
+homepage = "https://github.com/k4yt3x/syskeygen"
+keywords = ["web"]
+license = "ISC"
+name = "syskeygen"
+readme = "README.md"
+repository = "https://github.com/k4yt3x/syskeygen"
+resolver = "2"
+version = "1.0.0"
+
+[[bin]]
+name = "syskeygen"
+path = "src/main.rs"
+
+[profile.dev]
+opt-level = 3
+
+[profile.release]
+strip = "symbols"
+
+[dependencies]
+anyhow = "1.0"
+clap = { version = "4.0", features = ["derive"] }
+hex = "0.4"
+phf = { version = "0.11", features = ["macros"] }
