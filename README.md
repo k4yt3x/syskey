@@ -1,6 +1,8 @@
 # Motorola System Key Generation Utility
 
-> **Warning**: Please use this tool only for the system(s) you are authorized to program radio apparatus for. Illegal use could lead to legal consequences.
+> **Warning**\
+> Please use this tool only for the system(s) you are authorized to program radio apparatus for.\
+> Illegal use could lead to legal consequences.
 
 This program is a Rust rewrite of Motorola's system key generation utility originally written for MS-DOS. The purpose of the rewrite is to make this utility compatible with the modern computer architectures so it does not need to be executed in MS-DOS emulators such as DOSBox. It is also cross-platform so it can be compiled and used on all Windows, Linux, and macOS.
 
